@@ -22,13 +22,13 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request)
     {
-        if ( $request->user()->role == true ) {
+        if ( $request->user()->isAdmin() ) {
             return redirect('/admin/');
         }
 
-        return redirect('/user/');
+        return redirect('/index');
     }
 
     /**
@@ -36,7 +36,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    //protected $redirectTo = '/home';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.

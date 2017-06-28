@@ -13,8 +13,29 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::enableForeignKeyConstraints();
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->text('body');
+            $table->integer('author_id')
+                  ->unsigned();
+            $table->tinyInteger('score')
+                  ->unsigned()
+                  ->default(0);
+            $table->boolean('checked')
+                  ->default(false);
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('author_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+        });
     }
+
+
 
     /**
      * Reverse the migrations.
@@ -23,6 +44,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('posts');
     }
 }

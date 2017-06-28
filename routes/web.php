@@ -18,14 +18,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function () {
-    Route::get('/', function () {
-        return view('admin.index');
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function () {
+        Route::get('/', 'AdminController@index');
+        Route::get('users', 'AdminController@editUsers')->name('editUsers');
+        Route::get('posts', 'AdminController@editPosts')->name('editPosts');
     });
+
+    Route::get('index', 'PostController@index')->name('index');
+    Route::get('post', 'PostController@post')->name('essayForm');
+    Route::post('post', 'PostController@putPost')->name('sendEssay');
+
 });
 
-Route::group(['prefix' => 'user'], function () {
-    Route::get('/', function () {
-        return view('user.index');
-    });
-});
