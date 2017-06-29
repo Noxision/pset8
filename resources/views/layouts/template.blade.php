@@ -28,17 +28,15 @@
                     </button>
 
                     <!-- Branding Image -->
-
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if (Auth::user()->isAdmin())
-                            <li><a href="{{ route('adminIndex') }}">Administrator</a></li>
-                        @else
-                            <li><a href="{{ route('index') }}">Main</a></li>
-                        @endif
+                        &nbsp;
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -7,8 +7,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <h1>Edit menu</h1>
                 <hr>
-                <a href="{{ route('editUsers') }}" class="btn btn-default btn-lg "> Edit Users! </a>
-                <a href="{{ route('editPosts') }}" class="btn btn-default btn-lg "> Edit Essays! </a>
+                <a href="{{ route('users') }}" class="btn btn-default btn-lg "> Edit Users! </a>
+                <a href="{{ route('posts') }}" class="btn btn-default btn-lg "> Edit Essays! </a>
             </div>
         </div>
     </div>

@@ -35,4 +35,30 @@ class PostController extends Controller
 
         return redirect()->route('index');
     }
+
+    public function editPost($id, Request $request) {
+
+        $this->validate( $request, [
+            'title' => 'required|max:50',
+            'body' => 'required',
+            'score' => 'integer|required|between:0,100',
+        ]);
+
+        $post = Post::find($id);
+
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->score = $request->score;
+        $post->checked = $request->checked ? true : false;
+        $post->save();
+
+        return redirect()->route('posts');
+    }
+
+    public function deletePost($id) {
+
+        $post = Post::find($id)->delete();
+
+        return redirect()->route('posts');
+    }
 }
