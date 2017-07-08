@@ -24,14 +24,14 @@
                     <td>{{ $post->score }}</td>
                     <td>{{ $post->checked }}</td>
                     <td>
-                        {!! Form::open(array('method' => 'get', 'action' => array('AdminController@updatePost', $post->id))) !!}
-                            {{ Form::submit('Update!', ['class' => 'btn btn-success']) }}
-                        {!! Form::close() !!}
+                        {{ Form::open(['method' => 'get', 'route' => ['posts.edit', $post->id]]) }}
+                            {{ Form::submit('Edit!', ['class' => 'btn btn-success']) }}
+                        {{ Form::close() }}
                     </td>
                     <td>
-                        {!! Form::open(array('method' => 'post', 'action' => array('PostController@deletePost', $post->id))) !!}
-                            {{ Form::submit('Delete!', ['class' => 'btn btn-warning']) }}
-                        {!! Form::close() !!}
+                        {{ Form::open(['method' => 'delete', 'route' => ['posts.destroy', $post->id], 'onsubmit' => 'return confirm("Are you sure?")']) }}
+                            {{ Form::button('Delete!', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
                     </td>
                 </tr>
             @endforeach

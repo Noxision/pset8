@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Update post</h1>
+            <h1>Edit essay!</h1>
             <hr>
 
-            {{ Form::model($post, array('method' => 'post', 'action' => array('PostController@editPost', $post->id))) }}
+            {{ Form::model($post, ['method' => 'patch', 'route' => ['posts.update', $post->id]]) }}
 
                 <div class="form-group">
                 {{ Form::label('title', 'Title') }}
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-group">
-                {{ Form::submit('Update Post!', ['class' => 'btn btn-success btn-lg btn-block']) }}
+                {{ Form::submit('Update Essay!', ['class' => 'btn btn-success btn-lg btn-block']) }}
                 </div>
 
             {{ Form::close() }}

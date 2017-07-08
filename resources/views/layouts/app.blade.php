@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if (Auth::user()->isAdmin())
+                        @if (Auth::user()->status)
                             <li><a href="{{ route('adminIndex') }}">Administrator</a></li>
                         @else
                             <li><a href="{{ route('index') }}">Main</a></li>

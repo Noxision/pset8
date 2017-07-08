@@ -13,8 +13,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $dates = ['deleted_at'];
-    protected $guarded = ['role'];
-    private static $role;
+    protected $guarded = ['status'];
 
     /**
      * The attributes that are mass assignable.
@@ -34,15 +33,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isAdmin() {
-        if (empty(self::$role)) {
-            self::$role = $this->role;
-        }
-        return self::$role;
-    }
-
     public function posts()
     {
         return $this->hasMany('App\Post', 'author_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function($user)
+        {
+            $user->posts()->delete();
+        });
     }
 }

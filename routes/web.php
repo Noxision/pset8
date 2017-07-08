@@ -10,29 +10,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SiteController@welcome')->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('home', 'SiteController@home')->name('home');
+    Route::group(['middleware' => 'banned'], function () {
+        Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function () {
+            Route::resource('users', 'UserController');
+            Route::resource('posts', 'PostController');
+            Route::get('index', 'AdminController@index')->name('adminIndex');
+        });
 
-    Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function () {
-        Route::get('index', 'AdminController@index')->name('adminIndex');
-        Route::get('users', 'AdminController@editUsers')->name('users');
-        Route::get('posts', 'AdminController@editPosts')->name('posts');
-        Route::get('posts/edit/{id}', 'AdminController@updatePost')->name('postEdit');
-        Route::post('posts/delete/{id}', 'PostController@deletePost')->name('postDelete');
-        Route::post('post/edit/{id}', 'PostController@editPost')->name('edit');
-        Route::get('users/edit/{id}', 'AdminController@updateUser')->name('userEdit');
-        Route::post('users/delete/{id}', 'AdminController@deleteUser')->name('userDelete');
-        Route::post('user/edit/{id}', 'AdminController@editUser')->name('updateUser');
+        Route::resource('posts', 'PostController', ['only' => [
+            'create', 'store'
+        ]]);
+        Route::get('index', 'SiteController@index')->name('index');
+
     });
-
-    Route::get('index', 'PostController@index')->name('index');
-    Route::get('post', 'PostController@post')->name('essayForm');
-    Route::post('post', 'PostController@putPost')->name('sendEssay');
 });

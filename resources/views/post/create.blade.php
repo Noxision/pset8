@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Post new essay</h1>
+            <h1>Post new essay!</h1>
             <hr>
 
-            {!! Form::open(array('route' => 'sendEssay')) !!}
+            {{ Form::open(['route' => 'posts.store', 'method' => 'post']) }}
 
             <div class="form-group">
                 {{ Form::label('title', 'Title:') }}
@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 {{ Form::submit('Send essay!', ['class' => 'btn btn-success btn-lg btn-block']) }}
-                {!! Form::close() !!}
+                {{ Form::close() }}
             </div>
 
         </div>

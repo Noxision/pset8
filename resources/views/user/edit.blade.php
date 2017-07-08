@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Update user</h1>
+            <h1>Edit user!</h1>
             <hr>
 
-            {{ Form::model($user, array('method' => 'post', 'action' => array('AdminController@editUser', $user->id))) }}
+            {{ Form::model($user, ['method' => 'patch', 'route' => ['users.update', $user->id]]) }}
 
                 <div class="form-group">
                 {{ Form::label('name', 'Name') }}
@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="form-group">
-                {{ Form::label('role', 'Role') }}
-                {{ Form::checkbox('role', null, false) }}
+                {{ Form::label('status', 'Admin status') }}
+                {{ Form::checkbox('status', null) }}
                 </div>
 
                 <div class="form-group">

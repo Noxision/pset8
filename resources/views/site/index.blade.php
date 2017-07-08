@@ -5,17 +5,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1>Look up yours essays</h1>
+                <h1 class="text-center">Look up yours essays!</h1>
                 <hr>
                 @if (count($posts) != 0)
                     @foreach ($posts as $post)
-                        <h3>{{ $post->title }}</h3>
-                        <div>{{ $post->body }}</div>
-                        <div> Score: {{ $post->score }}</div>
+                        <h3 class="text-center">{{ $post->title }}</h3>
+                        <p style="text-indent: 20px;">{{ $post->body }}</p>
+                        <div><strong>Score: {{ $post->score }}</strong></div>
                         @if ($post->checked)
-                            <div>Checked!</div>
+                            <div><em>Checked!</em></div>
                         @else
-                            <div>Not checked yet!</div>
+                            <div><em>Not checked yet!</em></div>
                         @endif
                         <hr>
                     @endforeach
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <a href="{{ route('essayForm') }}" class="btn btn-default btn-lg btn-group-justified"> Put new essay </a>
+    <a href="{{ route('posts.create') }}" class="btn btn-default btn-lg btn-group-justified"> Put new essay! </a>
 
 </div>
 @endsection

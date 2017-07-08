@@ -8,7 +8,11 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    @if ( Auth::user()->banned )
+                        Sorry, but no way back. You are banned, dude.
+                    @else
+                        You are logged in!
+                    @endif
                 </div>
             </div>
         </div>

@@ -24,14 +24,15 @@ class CreatePostsTable extends Migration
                   ->unsigned()
                   ->default(0);
             $table->boolean('checked')
-                  ->default(false);
+                  ->default(0);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('author_id')
                   ->references('id')
                   ->on('users')
-                  ->onDelete('cascade');
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
         });
     }
 

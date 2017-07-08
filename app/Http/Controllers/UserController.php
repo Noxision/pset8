@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+use App\User;
 
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $users = User::all()->where('status', '<>', '1');
 
-        foreach ($posts as $post) {
-            $post->author = $post->author->name;
-        }
-
-        return view('admin.posts', compact('posts'));
+        return view('admin.users', compact('users'));
     }
 
     /**
@@ -30,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
@@ -41,18 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate( $request, [
-            'title' => 'required|max:50',
-            'body' => 'required'
-        ]);
-
-        $post = new Post();
-
-        $request['author_id'] = $request->user()->id;
-
-        $post->fill($request->all())->save();
-
-        return redirect()->route('index');
+        //
     }
 
     /**
@@ -74,8 +59,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
-        return view('post.edit', compact('post'));
+        $user = User::findOrFail($id);
+
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -88,18 +74,21 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate( $request, [
-            'title' => 'required|max:50',
-            'body' => 'required',
-            'score' => 'integer|required|between:0,100',
+            'name' => 'required',
+            'email' => 'email|required',
+            'password' => 'required|min:6',
         ]);
 
-        $request['checked'] = !empty($request['checked']) ? 1 : 0;
+        $user = User::findOrFail($id);
 
-        $post = Post::findOrFail($id);
+        if ($user->password != $request['password']) {
+            $request['password'] = bcrypt($request['password']);
+        }
+        $request['banned'] = !empty($request['banned']) ? 1 : 0;
+        $request['status'] = !empty($request['status']) ? 1 : 0;
+        $user->fill($request->all())->save();
 
-        $post->fill($request->all())->save();
-
-        return redirect()->route('posts.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -110,8 +99,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::findOrFail($id)->delete();
+        User::findOrFail($id)->delete();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('users.index');
     }
 }

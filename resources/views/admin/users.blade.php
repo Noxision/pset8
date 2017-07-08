@@ -9,7 +9,6 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Password</th>
-                <th>Role</th>
                 <th>Banned</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -21,17 +20,16 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->password }}</td>
-                    <td>{{ $user->role }}</td>
                     <td>{{ $user->banned }}</td>
                     <td>
-                        {!! Form::open(array('method' => 'get', 'action' => array('AdminController@updateUser', $user->id))) !!}
-                            {{ Form::submit('Update!', ['class' => 'btn btn-success']) }}
-                        {!! Form::close() !!}
+                        {{ Form::open(['method' => 'get', 'route' => ['users.edit', $user->id]]) }}
+                            {{ Form::submit('Edit!', ['class' => 'btn btn-success']) }}
+                        {{ Form::close() }}
                     </td>
                     <td>
-                        {!! Form::open(array('method' => 'post', 'action' => array('AdminController@deleteUser', $user->id))) !!}
-                            {{ Form::submit('Delete!', ['class' => 'btn btn-warning']) }}
-                        {!! Form::close() !!}
+                        {{ Form::open(['method' => 'delete', 'route' => ['users.destroy', $user->id], 'onsubmit' => 'return confirm("Are you sure?")']) }}
+                            {{ Form::submit('Delete!', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
                     </td>
                 </tr>
             @endforeach
