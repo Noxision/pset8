@@ -35,7 +35,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (Auth::user()->status)
-                            <li><a href="{{ route('adminIndex') }}">Administrator</a></li>
+                            <li><a href="{{ route('adminIndex') }}">Administrator menu</a></li>
                         @else
                             <li><a href="{{ route('index') }}">Main</a></li>
                         @endif

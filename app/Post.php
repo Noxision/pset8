@@ -19,4 +19,8 @@ class Post extends Model
     public function author() {
         return $this->belongsTo('App\User', 'author_id', 'id');
     }
+
+    public function authorDeleted() {
+        return $this->belongsTo('App\User', 'author_id', 'id')->withTrashed();
+    }
 }

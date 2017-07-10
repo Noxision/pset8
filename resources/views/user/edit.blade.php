@@ -26,12 +26,12 @@
 
                 <div class="form-group">
                 {{ Form::label('status', 'Admin status') }}
-                {{ Form::checkbox('status', null) }}
+                {{ Form::checkbox('status') }}
                 </div>
 
                 <div class="form-group">
                 {{ Form::label('banned', 'Banned') }}
-                {{ Form::checkbox('banned', null, $user->banned ? true : false) }}
+                {{ Form::checkbox('banned') }}
                 </div>
 
                 <div class="form-group">

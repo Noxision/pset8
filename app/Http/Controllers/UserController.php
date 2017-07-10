@@ -84,8 +84,8 @@ class UserController extends Controller
         if ($user->password != $request['password']) {
             $request['password'] = bcrypt($request['password']);
         }
-        $request['banned'] = !empty($request['banned']) ? 1 : 0;
-        $request['status'] = !empty($request['status']) ? 1 : 0;
+        $request['banned'] = $request['banned'] ?? false;
+
         $user->fill($request->all())->save();
 
         return redirect()->route('users.index');
@@ -102,5 +102,30 @@ class UserController extends Controller
         User::findOrFail($id)->delete();
 
         return redirect()->route('users.index');
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trash()
+    {
+        $users = User::onlyTrashed()->get();
+
+        return view('user.deleted', compact('users'));
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        User::onlyTrashed()->where('id', $id)->restore();
+
+        return redirect()->route('users.trash');
     }
 }

@@ -39,4 +39,14 @@ class SiteController extends Controller
     {
         return view('site.welcome');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminIndex()
+    {
+        return view('admin.index');
+    }
 }

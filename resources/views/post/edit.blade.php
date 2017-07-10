@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                 {{ Form::label('checked', 'Checked') }}
-                {{ Form::checkbox('checked', null, $post->checked ? true : false) }}
+                {{ Form::checkbox('checked') }}
                 </div>
 
                 <div class="form-group">

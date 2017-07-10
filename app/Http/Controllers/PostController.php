@@ -93,7 +93,7 @@ class PostController extends Controller
             'score' => 'integer|required|between:0,100',
         ]);
 
-        $request['checked'] = !empty($request['checked']) ? 1 : 0;
+        $request['checked'] = $request['checked'] ?? false;
 
         $post = Post::findOrFail($id);
 
@@ -113,5 +113,38 @@ class PostController extends Controller
         Post::findOrFail($id)->delete();
 
         return redirect()->route('posts.index');
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trash()
+    {
+        $posts = Post::onlyTrashed()->get();
+
+        foreach ($posts as $key => $post) {
+            if($post->authorDeleted->trashed()) {
+                unset($posts[$key]);
+            } else {
+                $post->author = $post->author->name;
+            }
+        }
+
+        return view('post.deleted', compact('posts'));
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        Post::onlyTrashed()->where('id', $id)->restore();
+
+        return redirect()->route('posts.trash');
     }
 }
